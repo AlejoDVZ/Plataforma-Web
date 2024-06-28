@@ -1,0 +1,15 @@
+{
+  "name": "plataforma_de_gestion_de_casos",
+  "version": "1.0.0",
+  "description": "Esta es la propuesta en la cual se basa mi proyecto de investigacion",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.19.2",
+    "nodemon": "^3.1.4"
+  }
+}
