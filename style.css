@@ -5,6 +5,7 @@
     --midgray:#b4b4b462;
     --darkergray:#424242;
     --rojo:#d2322d; ;
+    padding: 0 0;
     
 }
  * {
@@ -20,6 +21,7 @@ body{
     bottom: 0;
     left: 0;
     right: 0;
+    padding: 0;
 }
 .container{
 width:100% ;
@@ -85,4 +87,69 @@ align-items: flex-start;
     color: var(--white);
     margin-bottom: 10px;
     background-color: var(--rojo);
+} 
+/* css que respecta al login */
+.page{
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: row;
+    padding: 0;
+}
+main{
+    padding: 0;
+    width: 100%;
+    height: 100%;
+}
+.lateral{
+    background-color: var(--darkergray);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 10%;
+    height: 100%;
+}
+.lateral a{
+    padding: 20px 0;
+}
+.icon{
+    width: 100px;
+    fill: var(--white);
+    stroke: var(--white);
+}
+header{ 
+    width: 100%;
+    background-color: var(--midgray);
+    padding: 10px 10px;
+}
+.username{
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+}
+.username h1{
+   text-align: center;
+   align-self: center;
+}
+.username img{
+    width: 100px;
+    align-self: center;
+    border-radius: 50%;
+    border: 5px solid #000000;
+}
+.cases{
+    padding: 5px 5px;
+ }
+.lower-card-body{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+.lower-card-body .left{
+display: flex;
+flex-direction: column;
+}
+.right{
+    padding: 0;
+    align-self: center;
 }
