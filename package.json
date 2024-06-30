@@ -4,14 +4,17 @@
   "description": "Esta es la propuesta en la cual se basa mi proyecto de investigacion",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "nodemon server.js"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
     "bootstrap": "^5.3.3",
     "bootstrap-icons": "^1.11.3",
+    "cors": "^2.8.5",
     "express": "^4.19.2",
+    "express-session": "^1.18.0",
     "mysql": "^2.18.1",
     "nodemon": "^3.1.4"
   }
