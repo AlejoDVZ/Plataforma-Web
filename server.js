@@ -33,6 +33,8 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, "static")));
 app.use(express.static("estatic"));
+app.use(express.static(path.join(__dirname, "node_modules")));
+app.use(express.static("node_modules"));
 
 app.get("/", function (request, response) {
   // Renderizamos la plantilla de login
@@ -73,7 +75,7 @@ app.post("/auth", function (request, response) {
 });
 
 // Ruta para la página de inicio (requiere autenticación)
-app.get("/dashboard", cors(), function (request, response) {
+app.get("/dashboard", function (request, response) {
   // Verificamos si el usuario está autenticado
   if (request.session.loggedin) {
     const query =
@@ -89,15 +91,10 @@ app.get("/dashboard", cors(), function (request, response) {
           apertura: []
         };
         results.forEach((current) => {
-
-          console.log("Current:", current);
     
-          casos.nombre.push(current.nombre);
-    
-          casos.apellido.push(current.apellido);
-    
-          casos.cargo.push(current.calificacion);
-    
+          casos.nombre.push(current.nombre);    
+          casos.apellido.push(current.apellido);    
+          casos.cargo.push(current.calificacion);    
           casos.apertura.push(current.fecha_inicio);
     
         });
@@ -121,6 +118,8 @@ app.get("/dashboard", cors(), function (request, response) {
     response.send("Please login to view this page!");
   }
 });
+
+
 app.listen(3000, function () {
   console.log("CORS-enabled web server listening on port 3000");
 });
