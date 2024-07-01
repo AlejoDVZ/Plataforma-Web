@@ -30,23 +30,23 @@
               </div>
             </header>
             <div id="cases" class="cases">
-              <% cases.forEach(case => { %>
+              <!-- dashboard.html -->
+
                 <div class="card">
                   <div class="upper-card-body">
-                    <h5 class="card-title"><%= cases.nombre %><%= apellido %></h5>
-                    <p class="cargo"><%= cargo %></p>
+                    <h5 class="card-title"><%= casos.nombre %>  <%= casos.apellido %></h5>
+                    <p class="cargo"><%= casos.cargo %></p>
                   </div>
                   <div class="lower-card-body">
                     <div class="left">
                       <h5 class="card-text">Caso aperturado el día:</h5>
-                      <p class="card-text"><%= apertura %></p>
+                      <p class="card-text"><%= casos.apertura %></p>
                     </div>
                     <div class="right">
                       <a href="#" id="go-details" class="btn btn-primary">Detalles del caso</a>
                     </div>
                   </div>
                 </div>
-              <% }) %>
             </div>
           </main>
         </div>
