@@ -35,12 +35,17 @@ app.use(express.static(path.join(__dirname, "static")));
 app.use(express.static("estatic"));
 app.use(express.static(path.join(__dirname, "node_modules")));
 app.use(express.static("node_modules"));
+app.use('/node_modules', express.static('node_modules'));
+app.use('/bootstrap', express.static('node_modules/bootstrap/dist'));
 
 app.get("/", function (request, response) {
   // Renderizamos la plantilla de login
   response.sendFile(path.join(__dirname + "/login.html"));
 });
+
 var id = 0;
+var nombre = "";
+
 app.post("/auth", function (request, response) {
   // Capturamos los campos de entrada
   let username = request.body.username;
@@ -50,13 +55,14 @@ app.post("/auth", function (request, response) {
   if (username && password) {
     // Ejecutamos una consulta SQL para buscar el usuario en la base de datos
     connection.query(
-      "SELECT usuarios.id ,usuarios.password , mails.direction FROM usuarios inner JOIN mails ON usuarios.correo = mails.id WHERE mails.direction =? AND usuarios.password =?",
+      "SELECT usuarios.id ,usuarios.password, usuarios.nombre, mails.direction FROM usuarios inner JOIN mails ON usuarios.correo = mails.id WHERE mails.direction =? AND usuarios.password =?",
       [username, password],
       function (error, results, fields) {
         if (error) throw error;
         if (results.length > 0) {
           // Autenticamos al usuario y creamos una sesión
           id = results[0].id;
+          nombre = results[0].nombre;
           console.log(id);
           request.session.loggedin = true;
           request.session.username = username;
@@ -79,27 +85,26 @@ app.get("/dashboard", function (request, response) {
   // Verificamos si el usuario está autenticado
   if (request.session.loggedin) {
     const query =
-      "SELECT defendidos.nombre, defendidos.apellido, califiaciones_juridicas.calificacion, causas.fecha_inicio FROM causas INNER JOIN defendidos_causas ON causas.id = defendidos_causas.id_causa INNER JOIN defendidos ON defendidos_causas.id_defendido = defendidos.id INNER JOIN defensores_causas ON causas.id = defensores_causas.id_causa INNER JOIN usuarios ON usuarios.id = defensores_causas.id_defensor INNER JOIN califiaciones_juridicas ON califiaciones_juridicas.id = defendidos_causas.id_calificacion where usuarios.id =? & causas.estado = 1;"; // your query here
+      "SELECT defendidos.nombre, defendidos.apellido, califiaciones_juridicas.calificacion, causas.fecha_inicio, causas.id FROM causas INNER JOIN defendidos_causas ON causas.id = defendidos_causas.id_causa INNER JOIN defendidos ON defendidos_causas.id_defendido = defendidos.id INNER JOIN defensores_causas ON causas.id = defensores_causas.id_causa INNER JOIN usuarios ON usuarios.id = defensores_causas.id_defensor INNER JOIN califiaciones_juridicas ON califiaciones_juridicas.id = defendidos_causas.id_calificacion where usuarios.id =? & causas.estado = 1;"; // your query here
     connection.query(query, [id], function (error, results, fields) {
       if (error) throw error;
       if (results.length > 0) {
         console.log('estos son los resultados ',results);
-        const casos = {
-          nombre: [],    
-          apellido: [],    
-          cargo: [],    
-          apertura: []
-        };
-        results.forEach((current) => {
-    
-          casos.nombre.push(current.nombre);    
-          casos.apellido.push(current.apellido);    
-          casos.cargo.push(current.calificacion);    
-          casos.apertura.push(current.fecha_inicio);
-    
-        });
+        const casos = [];
+        for (let i = 0; i < results.length; i++) {
+
+          casos.push({ // Push an object to the array  
+            nombre: results[i].nombre,  
+            apellido: results[i].apellido,  
+            cargo: results[i].calificacion, // Assuming calificacion is the cargo  
+            apertura: results[i].fecha_inicio,  
+            causa: results[i].id  
+          });
+
+  
+        }
         // Store the casos array in a variable that can be accessed outside the callback function
-        const data = { casos };
+        const data = { casos, nombre };
         ejs.renderFile("dashboard.html", data, (err, html) => {
           if (err) {
             console.error(err);

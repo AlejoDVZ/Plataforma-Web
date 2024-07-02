@@ -160,6 +160,7 @@ header{
  .card{
     width:100%;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    margin-bottom: 20px;
 }
 .card-title{
     font-weight: 700;
@@ -189,4 +190,13 @@ flex-direction: column;
 }
 #go-details{
    margin-right: 30px;
+}
+#ventana{
+    height: 800px;
+    width: 1600px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+.fila{
+    display: flex;
+    flex-direction: row;
 }
